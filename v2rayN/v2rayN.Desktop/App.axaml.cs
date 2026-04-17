@@ -1,4 +1,5 @@
 using v2rayN.Desktop.Views;
+using v2rayN.Desktop.Common;
 
 namespace v2rayN.Desktop;
 
@@ -22,6 +23,13 @@ public partial class App : Application
 
             desktop.Exit += OnExit;
             desktop.MainWindow = new MainWindow();
+            desktop.MainWindow.Icon = AvaUtils.GetAppIcon(AppManager.Instance.Config.SystemProxyItem.SysProxyType);
+            var icons = TrayIcon.GetIcons(this);
+            if (icons is { Count: > 0 })
+            {
+                icons[0].Icon = desktop.MainWindow.Icon;
+                TrayIcon.SetIcons(this, icons);
+            }
         }
 
         base.OnFrameworkInitializationCompleted();

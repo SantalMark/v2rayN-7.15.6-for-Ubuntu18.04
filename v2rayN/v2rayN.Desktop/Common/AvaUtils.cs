@@ -39,13 +39,17 @@ internal class AvaUtils
     public static WindowIcon GetAppIcon(ESysProxyType sysProxyType)
     {
         var index = (int)sysProxyType + 1;
-        var fileName = Utils.GetPath($"NotifyIcon{index}.ico");
-        if (File.Exists(fileName))
+        if (Utils.IsWindows())
         {
-            return new(fileName);
+            var fileName = Utils.GetPath($"NotifyIcon{index}.ico");
+            if (File.Exists(fileName))
+            {
+                return new(fileName);
+            }
         }
 
-        var uri = new Uri(Path.Combine(Global.AvaAssets, $"NotifyIcon{index}.ico"));
+        var assetName = Utils.IsWindows() ? $"NotifyIcon{index}.ico" : $"NotifyIcon{index}.panel.png";
+        var uri = new Uri(Path.Combine(Global.AvaAssets, assetName));
         using var bitmap = new Bitmap(AssetLoader.Open(uri));
         return new(bitmap);
     }
