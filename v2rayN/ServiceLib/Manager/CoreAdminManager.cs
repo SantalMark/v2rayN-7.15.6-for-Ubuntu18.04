@@ -76,7 +76,7 @@ public class CoreAdminManager
             var arg = new List<string>() { "-c", $"sudo -S {shFilePath} {_linuxSudoPid}" };
             var result = await Cli.Wrap(Global.LinuxBash)
                 .WithArguments(arg)
-                .WithStandardInputPipe(PipeSource.FromString(AppManager.Instance.LinuxSudoPwd))
+                .WithStandardInputPipe(PipeSource.FromString($"{AppManager.Instance.LinuxSudoPwd}{Environment.NewLine}"))
                 .ExecuteBufferedAsync();
 
             await UpdateFunc(false, result.StandardOutput.ToString());

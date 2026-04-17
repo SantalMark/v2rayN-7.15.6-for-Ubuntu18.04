@@ -21,13 +21,7 @@ public partial class SudoPasswordInputView : UserControl
 
     private async Task SavePasswordAsync()
     {
-        if (txtPassword.Text.IsNullOrEmpty())
-        {
-            txtPassword.Focus();
-            return;
-        }
-
-        var password = txtPassword.Text;
+        var password = txtPassword.Text ?? string.Empty;
         btnSave.IsEnabled = false;
 
         try
@@ -66,7 +60,7 @@ public partial class SudoPasswordInputView : UserControl
             var arg = new List<string>() { "-c", "sudo -S echo SUDO_CHECK" };
             var result = await CliWrap.Cli.Wrap(Global.LinuxBash)
                 .WithArguments(arg)
-                .WithStandardInputPipe(CliWrap.PipeSource.FromString(password))
+                .WithStandardInputPipe(CliWrap.PipeSource.FromString($"{password}{Environment.NewLine}"))
                 .ExecuteBufferedAsync();
 
             return result.ExitCode == 0;

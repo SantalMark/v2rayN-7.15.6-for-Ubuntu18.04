@@ -500,11 +500,11 @@ public class StatusBarViewModel : MyReactiveObject
         }
         else if (Utils.IsLinux())
         {
-            return AppManager.Instance.LinuxSudoPwd.IsNotEmpty();
+            return AppManager.Instance.IsLinuxSudoReady;
         }
         else if (Utils.IsOSX())
         {
-            return AppManager.Instance.LinuxSudoPwd.IsNotEmpty();
+            return AppManager.Instance.IsLinuxSudoReady;
         }
         return false;
     }

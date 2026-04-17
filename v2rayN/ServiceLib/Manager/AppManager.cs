@@ -29,7 +29,8 @@ public sealed class AppManager
         }
     }
 
-    public string LinuxSudoPwd { get; set; }
+    public string LinuxSudoPwd { get; set; } = string.Empty;
+    public bool IsLinuxSudoReady { get; set; }
 
     #endregion Property
 
